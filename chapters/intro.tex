@@ -1,0 +1,69 @@
+
+\section{Introduction}
+
+Atmospheric visibility \cite{visibilitybook} is a critical factor in aviation safety \cite{Kulesa2003WEATHERAA, fultz2016fatal, long2022analysis, fujita1977analysis, ramee2021analysis}, directly impacting a pilot's ability to navigate and make critical decisions. The tragic accident involving professional basketball player Kobe Bryant in January 2020 highlights the severe consequences of visibility-related issues. The National Transportation Safety Board (NTSB) report concluded that the pilot's decision to continue visual flight rules (VFR) into instrument meteorological conditions (IMC) led to spatial disorientation and the subsequent crash. This incident underscores the critical need for accurate, real-time visibility estimation in flight.
+
+Visibility estimation in aviation is particularly challenging due to several factors. Currently, pilots rely heavily on their prior knowledge of landmarks and terrain features to gauge visibility \cite{ahlstrom2019assessments}. This dependence on pre-existing knowledge makes automatic estimation complex, as systems must account for varying geographical contexts. Additionally, conditions such as flying inside clouds or encountering rapidly changing weather patterns further complicate the problem, requiring robust and adaptable solutions.
+
+% In an era of rapidly advancing aviation technology and increasing air traffic, ensuring flight safety remains paramount. This paper introduces a groundbreaking multimodal approach to in-flight visibility estimation, leveraging both monocular RGB cameras and additional multimodal data to significantly enhance aviation safety across diverse weather conditions and flight scenarios.
+
+While deep learning methods have shown great promise in solving complex problems, they face challenges such as overfitting, generalization issues, and potential biases. These limitations are particularly evident in single-modality approaches, especially those relying solely on RGB images for visibility estimation across diverse flight conditions. RGB data alone often fails to capture crucial atmospheric properties or account for factors like glare, low-light conditions, or rapid weather changes \cite{Bouhsine2022, AitOuadil2023, li_meteorological_2017, chaabani_estimating_2018, palvanov_dhcnn_2018, choi_automatic_2018, you_relative_2019, li_method_2019, outay_estimating_2021}.
+
+% start your phrase with a what everytime
+
+To address these challenges, multimodal deep learning techniques have emerged as a promising solution. By integrating information from diverse modalities, these approaches enhance model capabilities and overcome the limitations of single-modality systems \cite{liu2018learn, castanedo2013review, molino2021improved, blasch2021machine}. Each modality captures a distinct type of information, often inaccessible through a single modality approach, resulting in a more comprehensive understanding of the environment and more accurate predictions.
+
+The significance of multimodal deep learning solutions in visibility estimation is increasingly recognized \cite{palvanov_visnet_2019, department_of_computer_science_chu_hai_college_of_higher_education_80_castle_peak_road_castle_peak_bay_tuen_mun_nt_hong_kong_meteorology_2020, AitOuadil2023, app11030997, Zhang2023, You2022, Chen2022, Wauben2016, Cheng2018, Zhou2021}. These models can overcome limitations that plague single-modality systems \cite{huang2021makesmultimodallearningbetter}. The integration of multimodal deep learning (Table~\ref{tab:literature_review}) significantly enhances the robustness, safety, and reliability of deep learning solutions, making them particularly well-suited for critical real-world applications where reliability is crucial \cite{6817512, liang2024foundationsmultisensoryartificialintelligence}.
+
+
+
+\begin{table}[htbp]
+\centering
+\caption{Literature Review of Modalities Used in the Literature for On-Ground Atmospheric Visibility Estimation }
+\footnotesize
+\begin{center}
+\begin{tabular}{|p{3cm}|c|c|c|c|c|c|c|}
+\hline
+\textbf{Modality} & \textbf{\cite{You2022}} & \textbf{\cite{Palvanov2019}} & \textbf{\cite{Zhang2023}} & \textbf{\cite{Chen2022}} & \textbf{\cite{Wauben2016}} & \textbf{\cite{Cheng2018}} & \textbf{\cite{Zhou2021}} \\
+\hline
+Depth Map &  & & X & & & & \\
+\hline
+\begin{tabular}[l]{@{}l@{}}Transmission Map\end{tabular}  & X & & X & & X & & \\
+\hline
+Disparity Map & X & & & & & &  \\
+\hline
+Entropy & & & & &  & X & X \\
+\hline
+Edge Detection & & & & & X & &  \\
+\hline
+\begin{tabular}[l]{@{}l@{}}Contrast Computation\end{tabular}   & & & & & X & & \\
+\hline
+\begin{tabular}[l]{@{}l@{}}Koschmieder Law\end{tabular} & &  & & & X & & X \\
+\hline
+FFT & & X & & & & & \\
+\hline
+Spectral Filter & & X & & & & & \\
+\hline
+\begin{tabular}[l]{@{}l@{}}Dark Channel\\ Prior\end{tabular} & & & & X & X & & X\\
+\hline
+\end{tabular}
+\label{tab:literature_review}
+\end{center}
+\end{table}
+
+Despite advances in deep learning for visibility estimation, there remains a significant gap in addressing in-flight visibility. This gap is largely attributable to the scarcity of comprehensive in-flight visibility datasets, which are crucial for training and validating deep learning models in aviation contexts \cite{AitOuadil2023}. Existing datasets concentrate on short-range visibility, offering a limited spectrum of sceneries, and land covers, and are mainly focused on ground-level atmospheric visibility. Moreover, they are predominantly confined to ground-level altitudes, neglecting the variability and complexity introduced by different elevation viewpoints \cite{AitOuadil2023}. This restriction in dataset diversity hampers the development of more universally applicable and robust in-flight visibility estimation models.
+
+In this work, we propose a multimodal framework for training visibility estimation systems to enhance the accuracy, trustworthiness, and robustness of DL models for atmospheric visibility estimation. We demonstrate how integrating diverse modalities can significantly mitigate the limitations inherent in unimodal RGB approaches, paving the way for more versatile and reliable DL applications in fields where environmental variability is critical. We also address the gap in publicly available datasets by creating a comprehensive dataset, capturing the visibility degradation across different land covers and altitudes.
+
+
+
+In detail, the contributions of this work are as follows:
+\begin{itemize}
+    \item We provide a meticulously curated dataset as a benchmark for visibility estimation and related challenges such as dehazing and visibility restoration \cite{gui2023comprehensive}. This dataset, named SeeSet V1, will be made available to the community alongside the code at \url{https://github.com/skywolfmo/seeNN-paper}. The data, acquired from the X-Plane 11 flight simulator, encompasses a wide array of images captured under varied visibility conditions and at multiple altitudes, ranging from ground level to 2,000 feet Above Ground Level (AGL).  
+    The dataset's comprehensiveness, spanning a wide range of visibility scenarios at multiple altitudes, establishes a robust foundation for training and evaluating visibility estimation approaches and other in-flight visibility restoration and image dehazing methods.
+    
+    \item  We have developed a multimodality fusion framework for estimating atmospheric visibility. This framework is used to train and validate multimodality deep learning models. Our results demonstrate that the multimodality deep learning models outperform the single-modality RGB model in terms of accuracy.
+
+
+\end{itemize}
+

@@ -1,9 +1,14 @@
 \section{Related Work}
 
-Many methods have been proposed in the literature that deals with fusing the different modalities and multiples stream network, ranging from simple concatenation of different inputs right from the get go, i.e. early fusion, feeding everything to a single feature extractor that extract as much information before feeding it to the either a decoder or a classifier head or a projection head.
+In the literature, many methods have been proposed to fuse different modalities in multi-stream networks. These methods can be broadly categorized into early fusion, intermediate fusion, and late fusion.
 
-or having the different modalities first fed to a certain amount of layers before fusing all the extracted embeddings from each encoder layer, where the model learn to extract as many useful features from each modality before they get fused, where it deals with the limits of the early fusion methods where one modality dominate over the feature space ending up losing compute power without gaining any improvement in model's performance.
+\subsection{Early Fusion}
+Early fusion involves concatenating different input modalities at the very beginning. The combined data is then fed into a single feature extractor, which learns to extract information from the fused representation. This approach is straightforward but can be limited if one modality dominates the feature space, leading to wasted computational resources without performance gains.
 
-The other type of fusion is the late fusion, where each modality is passed through it's own encoder, decoder, or any amount of layers until the decision layer (binary classification for example) than the fusion is done by either a vote between the different models or a mean of different decision taken.
+\subsection{Intermediate Fusion}
+Intermediate fusion, also known as mid-level fusion, involves feeding each modality through a few layers of its own encoder before fusing the extracted embeddings. This allows the model to learn useful features from each modality before they are combined, addressing some of the limitations of early fusion.
 
-While each of these approach has it's own advantages and drawbacks, the amount of uncertainty of each method, and impact on the final decision they have, as well
+\subsection{Late Fusion}
+In late fusion, each modality is passed through its own complete encoder-decoder or classification network. The fusion occurs at the decision level, where the outputs from the different models are combined through methods like voting or averaging. While this approach allows for modality-specific processing, it may not fully exploit the correlations between modalities at earlier stages.
+
+Each of these fusion strategies has its own advantages and disadvantages. The choice of fusion method can significantly impact the model's performance, and the optimal approach often depends on the specific application and the nature of the modalities being fused.

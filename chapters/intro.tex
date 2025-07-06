@@ -1,3 +1,12 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{cite}
+
+\begin{document}
 
 \section{Introduction}
 
@@ -13,42 +22,30 @@ While deep learning methods have shown great promise in solving complex problems
 
 To address these challenges, multimodal deep learning techniques have emerged as a promising solution. By integrating information from diverse modalities, these approaches enhance model capabilities and overcome the limitations of single-modality systems \cite{liu2018learn, castanedo2013review, molino2021improved, blasch2021machine}. Each modality captures a distinct type of information, often inaccessible through a single modality approach, resulting in a more comprehensive understanding of the environment and more accurate predictions.
 
-The significance of multimodal deep learning solutions in visibility estimation is increasingly recognized \cite{palvanov_visnet_2019, department_of_computer_science_chu_hai_college_of_higher_education_80_castle_peak_road_castle_peak_bay_tuen_mun_nt_hong_kong_meteorology_2020, AitOuadil2023, app11030997, Zhang2023, You2022, Chen2022, Wauben2016, Cheng2018, Zhou2021}. These models can overcome limitations that plague single-modality systems \cite{huang2021makesmultimodallearningbetter}. The integration of multimodal deep learning (Table~\ref{tab:literature_review}) significantly enhances the robustness, safety, and reliability of deep learning solutions, making them particularly well-suited for critical real-world applications where reliability is crucial \cite{6817512, liang2024foundationsmultisensoryartificialintelligence}.
+The significance of multimodal deep learning solutions in visibility estimation is increasingly recognized \cite{palvanov_visnet_2019, department_of_computer_science_chu_hai_college_of_higher_education_80_castle_peak_road_castle_peak_bay_tuen_mun_nt_hong_kong_meteorology_2020, AitOuadil2023, app11030997, Zhang2023, You2022, Chen2022, Wauben2016, Cheng2018, Zhou2021}. These models can overcome limitations that plague single-modality systems \cite{huang2021makesmultimodallearningbetter}. The integration of multimodal deep learning (\cref{tab:literature_review}) significantly enhances the robustness, safety, and reliability of deep learning solutions, making them particularly well-suited for critical real-world applications where reliability is crucial \cite{6817512, liang2024foundationsmultisensoryartificialintelligence}.
 
 
 
 \begin{table}[htbp]
 \centering
-\caption{Literature Review of Modalities Used in the Literature for On-Ground Atmospheric Visibility Estimation }
-\footnotesize
-\begin{center}
-\begin{tabular}{|p{3cm}|c|c|c|c|c|c|c|}
-\hline
-\textbf{Modality} & \textbf{\cite{You2022}} & \textbf{\cite{Palvanov2019}} & \textbf{\cite{Zhang2023}} & \textbf{\cite{Chen2022}} & \textbf{\cite{Wauben2016}} & \textbf{\cite{Cheng2018}} & \textbf{\cite{Zhou2021}} \\
-\hline
-Depth Map &  & & X & & & & \\
-\hline
-\begin{tabular}[l]{@{}l@{}}Transmission Map\end{tabular}  & X & & X & & X & & \\
-\hline
-Disparity Map & X & & & & & &  \\
-\hline
-Entropy & & & & &  & X & X \\
-\hline
-Edge Detection & & & & & X & &  \\
-\hline
-\begin{tabular}[l]{@{}l@{}}Contrast Computation\end{tabular}   & & & & & X & & \\
-\hline
-\begin{tabular}[l]{@{}l@{}}Koschmieder Law\end{tabular} & &  & & & X & & X \\
-\hline
-FFT & & X & & & & & \\
-\hline
-Spectral Filter & & X & & & & & \\
-\hline
-\begin{tabular}[l]{@{}l@{}}Dark Channel\\ Prior\end{tabular} & & & & X & X & & X\\
-\hline
-\end{tabular}
+\caption{Literature Review of Modalities Used in the Literature for On-Ground Atmospheric Visibility Estimation}
 \label{tab:literature_review}
-\end{center}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+\textbf{Modality} & \textbf{\cite{You2022}} & \textbf{\cite{Palvanov2019}} & \textbf{\cite{Zhang2023}} & \textbf{\cite{Chen2022}} & \textbf{\cite{Wauben2016}} & \textbf{\cite{Cheng2018}} & \textbf{\cite{Zhou2021}} \\
+\midrule
+Depth Map &  & & X & & & & \\
+Transmission Map  & X & & X & & X & & \\
+Disparity Map & X & & & & & &  \\
+Entropy & & & & &  & X & X \\
+Edge Detection & & & & & X & &  \\
+Contrast Computation   & & & & & X & & \\
+Koschmieder Law & &  & & & X & & X \\
+FFT & & X & & & & & \\
+Spectral Filter & & X & & & & & \\
+Dark Channel Prior & & & & X & X & & X\\
+\bottomrule
+\end{tabular}
 \end{table}
 
 Despite advances in deep learning for visibility estimation, there remains a significant gap in addressing in-flight visibility. This gap is largely attributable to the scarcity of comprehensive in-flight visibility datasets, which are crucial for training and validating deep learning models in aviation contexts \cite{AitOuadil2023}. Existing datasets concentrate on short-range visibility, offering a limited spectrum of sceneries, and land covers, and are mainly focused on ground-level atmospheric visibility. Moreover, they are predominantly confined to ground-level altitudes, neglecting the variability and complexity introduced by different elevation viewpoints \cite{AitOuadil2023}. This restriction in dataset diversity hampers the development of more universally applicable and robust in-flight visibility estimation models.
@@ -66,4 +63,9 @@ In detail, the contributions of this work are as follows:
 
 
 \end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
 

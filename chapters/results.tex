@@ -3,7 +3,7 @@
 % compare the different models results
 % talk about the confusion matrix, talk about how the model is miss classifying some of the of the images as labels next to the original label, not too far away
 
-Our research categorizes atmospheric visibility into five distinct categories, as summarized in Table~\ref{tab:vis_img_count}. This categorization is based on the visibility range in miles, which was set according to the requirements of the FAA. Resulting in a comprehensive dataset of 116,100 images spanning various altitudes, land covers, and sceneries.
+Our research categorizes atmospheric visibility into five distinct categories, as summarized in \cref{tab:vis_img_count}. This categorization is based on the visibility range in miles, which was set according to the requirements of the FAA. Resulting in a comprehensive dataset of 116,100 images spanning various altitudes, land covers, and sceneries.
 
 The training of a single modality RGB model did not achieve high accuracy on the different classes of our problem, with an overall accuracy of 87.92\%. This demonstrates the limitations of such models, especially when tested on unseen views. Unlike previous works that were tested on a limited number of views and with a data split that might have caused data leakage between the training set and test set, our model may have given false results during evaluation as it had already seen a similar image during training. To prevent the same problem in our experiments, we used the holdout method as we mentioned in the Experimental Setup,  %TODO refer to the chapter
 where we hide certain locations totally from the model during the training.
@@ -23,41 +23,32 @@ where we hide certain locations totally from the model during the training.
 % \end{figure}
 
 
-Unlike the single modality RGB model, results from the multimodality models (Table~\ref{tab:res_table}, Figure~\ref{fig:conf_mats})  show a big improvement in the accuracy of prediction in the validation set, compared with 87.92\% from the RGB model, when we fuse different modalities, we notice a leap of 10\% in accuracy. For instance, When we combine the embedding extracted from the RGB model with the embedding extracted from the depth map, the RGB-Depth model achieves a high accuracy of 96.53\% using a simple concatenate connector.
+Unlike the single modality RGB model, results from the multimodality models (\cref{tab:res_table}, \cref{fig:conf_mats})  show a big improvement in the accuracy of prediction in the validation set, compared with 87.92\% from the RGB model, when we fuse different modalities, we notice a leap of 10\% in accuracy. For instance, When we combine the embedding extracted from the RGB model with the embedding extracted from the depth map, the RGB-Depth model achieves a high accuracy of 96.53\% using a simple concatenate connector.
 
 
 \begin{table*}
 
 \centering
 \caption{Results comparison of using different modalities, }
-\begin{tabular}{c|c|c|c|c|c|c|c}
-\hline
 \label{tab:res_table}
+\begin{tabular}{@{}lccccccr@{}}
+\toprule
 Connector & RGB & Entropy & Edge & Depth &  Normal Surface  & \# trainable param & val acc.  \\
-\hline
+\midrule
 Unimodality & \checkmark &  &  &  &   &7M&  87.92  \\
-% \multirow{5}{*}{Unimodality} & \checkmark &  &  &  &   &7M&  87.92  \\
-% &  & \checkmark &&  &  &  7M &  95.6  \\
-% &  &   & \checkmark &  &   &7M& 97.23  \\
-% & &  &  & \checkmark &   &7M&   81.49  \\
-% & &  &  &  & \checkmark  &7M&   85,68  \\
-\hline
-
+\midrule
 \multirow{5}{*}{Concatenate}& \checkmark & \checkmark &  &  &   &14M&  96.4  \\
 & \checkmark &   & \checkmark &  &   &14M& 96.53   \\
 & \checkmark &  &  & \checkmark &   &14M&   \textbf{97.57}  \\
-% & \checkmark &  &  &  & \checkmark &$2*224^2$&14M&   In Training  \\
 & \checkmark &  &  & \checkmark & \checkmark  &21M&   97.14  \\
 & \checkmark & \checkmark & \checkmark  & \checkmark & \checkmark  & 38M & 96.3  \\
-\hline
-% \multirow{5}{*}{Self-Attention}& \checkmark & \checkmark &  &  &  &$2 * 224^2$&14M&  In-Training  \\
+\midrule
 \multirow{4}{*}{Self-Attention} & \checkmark &   & \checkmark &  &   &14M& 96.86  \\
 & \checkmark &  &  & \checkmark &   &14M&   96.31  \\
-% & \checkmark &  &  &  & \checkmark &$2*224^2$&14M&   In-Training  \\
 & \checkmark &  &  & \checkmark & \checkmark  &21M&   97.47  \\
 & \checkmark & \checkmark & \checkmark  & \checkmark & \checkmark  & 38M & \textbf{97.63}  \\
 
-\hline
+\bottomrule
 \end{tabular}
 \end{table*}
 % End Table

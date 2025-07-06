@@ -5,8 +5,8 @@ We introduce a novel framework incorporating multiple modalities for building at
 \label{sec:seeset}
 To overcome the limitations encountered in the previous studies and to include a broader range of real-world scenarios, we collect a novel aerial imagery dataset SeeSet v1. This dataset was carefully curated to incorporate dynamic views capturing sceneries from multiple locations, encompassing ground-based and aerial perspectives. 
 
-This section presents a detailed description of the data collection and labeling process (\ref{data_collection}). 
-In \ref{modalities}, we present the extraction techniques used to generate the additional image modalities. 
+This section presents a detailed description of the data collection and labeling process (\cref{data_collection}). 
+In \cref{modalities}, we present the extraction techniques used to generate the additional image modalities. 
 
 
 \subsubsection{Dataset Collection Process}
@@ -23,39 +23,39 @@ To generate our synthetic dataset, we utilize an FAA-approved flight simulator. 
  
 
 The collected images are automatically labeled into five discrete bins, each tailored to specific \href{https://www.faa.gov/air_traffic/publications/atpubs/aim_html/}{FAA requirements}. This categorization is based on visibility conditions and regulations relevant to both ground-based and aerial environments. The designated bins serve as the basis for the five labels utilized in training our DL models. 
-We report the classes (bins) specifications and the corresponding counts in Table~\ref{tab:vis_img_count}.
+We report the classes (bins) specifications and the corresponding counts in \cref{tab:vis_img_count}.
 
 
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.15\textwidth}
     \includegraphics[width=\textwidth, trim={7.5cm 0cm 7.5cm 0cm},clip]{imgs/examples/exp_0_featuresMiles_0.12427454732996136_featuresM_200_features.png}
+    \caption{< 0.5 mile}
     \label{subfig:bin0}
-        \caption{}
   \end{subfigure}
   \begin{subfigure}[b]{0.15\textwidth}
     \includegraphics[width=\textwidth, trim={7.5cm 0 7.5cm 0},clip]{imgs/examples/exp_0_featuresMiles_0.9320591049747102_featuresM_1500_features.png}
+    \caption{(0.5, 1] miles}
     \label{subfig:bin1}
-    \caption{}
   \end{subfigure}
   % Add the subfigrow environment here
     \begin{subfigure}[b]{0.15\textwidth}
       \includegraphics[width=\textwidth, trim={7.5cm 0 7.5cm 0},clip]{imgs/examples/exp_0_featuresMiles_1.8951868467819106_featuresM_3050_features.png}
+      \caption{(1, 3] miles}
       \label{subfig:bin2}
-          \caption{}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
       \includegraphics[width=\textwidth, trim={7.5cm 0 7.5cm 0},clip]{imgs/examples/exp_0_featuresMiles_4.038922788223744_featuresM_6500_features.png}
+      \caption{(3, 5] miles}
       \label{subfig:bin3}
-          \caption{}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
       \includegraphics[width=\textwidth, trim={7.5cm 0 7.5cm 0},clip]{imgs/examples/exp_0_featuresMiles_46.1462462872979_featuresM_74265_features.png}
+      \caption{> 5 miles}
       \label{subfig:bin4}
-          \caption{}
     \end{subfigure}
   
-  \caption{We show the impact of visibility on the multiple modalities for the 6N7 Sealane 01 View. Each row shows one modality: RGB, edge map, entropy map, FFT magnitude, and dark channel prior. Each column refers to a visibility bin: (a) visibility of $< 0.5$ mile, (b) visibility range $(0.5, 1]$ miles, (c) visibility range $(1, 3]$ miles, (d) visibility range $(3, 5]$ miles, and (e) Visibility of $> 5$ miles. }
+  \caption{The impact of visibility on the multiple modalities for the 6N7 Sealane 01 View. Each row shows one modality: RGB, edge map, entropy map, FFT magnitude, and dark channel prior. Each column refers to a visibility bin.}
   \label{fig:impact_vis_deg_features}
 \end{figure}
 
@@ -64,15 +64,18 @@ We report the classes (bins) specifications and the corresponding counts in Tabl
 \centering
 \caption{Visibility Categories and Images Count}
 \label{tab:vis_img_count}
-\begin{tabular}{|l|l|l|l|}
-\hline
-Category & Visibility in miles  & Visibility in meters & Count  \\ \hline
-4        & $\geq$ 5 miles             &     $\geq$ 8046.72m                 & 67002  \\ \hline
-3        & 3 to 5 miles         &      4828.03m to  8046.72m        & 19584  \\ \hline
-2        & 1 to 3 miles         &            1609.34m to 4828.03m         & 19648  \\ \hline
-1        & 0.5 miles to 1 mile  &               804.672m to 1609.34m      & 4928  \\ \hline
-0        & $\leq$ 0.5 mile   &     $\leq$ 804.672m                 & 4938  \\ \hline
-        &    &                      &  116100  \\ \hline
+\begin{tabular}{@{}lllr@{}}
+\toprule
+Category & Visibility in miles  & Visibility in meters & Count  \\
+\midrule
+4        & $\geq$ 5 miles             &     $\geq$ 8046.72m                 & 67002  \\
+3        & 3 to 5 miles         &      4828.03m to  8046.72m        & 19584  \\
+2        & 1 to 3 miles         &            1609.34m to 4828.03m         & 19648  \\
+1        & 0.5 to 1 mile  &               804.672m to 1609.34m      & 4928  \\
+0        & $\leq$ 0.5 mile   &     $\leq$ 804.672m                 & 4938  \\
+\midrule
+Total    &    &                      &  116100  \\
+\bottomrule
 \end{tabular}
 \end{table}
 

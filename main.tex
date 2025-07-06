@@ -50,15 +50,7 @@
 \maketitle
 
 \begin{abstract}
-Deep learning (DL) models have attained state-of-the-art performance in numerous fields. Nevertheless, for certain real-world applications, existing models encounter diverse challenges, ranging from a lack of generability to new data to issues of scalability and overfitting. In this context, integrating information extracted from different modalities holds promise as a potential solution to alleviate these challenges.
-This paper introduces SeeNN (\url{https://github.com/skywolfmo/seeNN-paper}), a multimodal deep-learning framework for long-range atmospheric visibility estimation. Using multimodal deep learning, SeeNN fuses various modalities to estimate long-range atmospheric visibility. These modalities include RGB imagery, Edge Map, Entropy Map, Depth Map, and Normal Surface Map. Results show that in contrast to single-modality RGB, which achieves only 87.92\% accuracy, multimodal deep learning models achieve an accuracy of over 96\%.
-This significant improvement highlights the potential of multimodal approaches to enhance the accuracy and reliability of atmospheric visibility estimation, which is crucial for improving safety in applications such as aviation, maritime navigation, and autonomous vehicles. By addressing challenges such as data variability, environmental factors, and the inherent complexity of atmospheric conditions, SeeNN contributes to more reliable and robust visibility estimation systems, thereby enhancing safety and operational efficiency in critical environments.
-
-
-
-
-
-
+Accurate, real-time estimation of atmospheric visibility is a critical yet challenging task in aviation safety. While deep learning has shown promise, unimodal approaches relying solely on RGB imagery often fail to capture the complexity of atmospheric conditions, leading to limitations in reliability and accuracy. This paper introduces SeeNN, a novel multimodal deep learning framework designed for robust, long-range, in-flight visibility estimation. SeeNN integrates information from five diverse modalities: RGB imagery, depth maps, normal surface maps, edge maps, and entropy maps. To facilitate the development and evaluation of such models, we also present SeeSet V1, a new, comprehensive, and publicly available benchmark dataset featuring a wide range of altitudes, land covers, and visibility conditions. Our extensive experiments demonstrate the superiority of the multimodal approach. The SeeNN framework achieves a classification accuracy of over 97\%, a significant improvement upon the 87.92\% accuracy of a baseline unimodal RGB model. This work underscores the substantial potential of multimodal fusion to enhance the reliability of automated visibility estimation systems, representing a key advancement toward improving safety and operational efficiency in aviation and other domains where visibility is a critical factor.
 \end{abstract}
 
 % \section{Nomenclature}

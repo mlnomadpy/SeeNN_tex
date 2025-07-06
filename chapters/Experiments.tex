@@ -1,6 +1,21 @@
-
 \section{Experimental Setup}
+\label{sec:experimental_setup}
+
+This section details the experimental setup used to train and evaluate our models. We describe the dataset partitioning, the generation of modalities, and the training parameters.
+
+\subsection{Dataset and Preprocessing}
+
+For this study, we utilized our custom-collected dataset, SeeSet V1 (\ref{sec:seeset}), which comprises 320 distinct views collected across 20 locations with varying land covers, each with visibility ranging from 0 to 100 miles. The dataset was partitioned into training and validation subsets using a holdout approach. Specifically, all views from a predefined set of locations were reserved for the validation set. This strategy ensures that the model does not overfit to specific sceneries and instead learns to estimate visibility based on image degradation, providing a more robust evaluation of its generalization capabilities \cite{Bouhsine2022}. This resulted in a training set of $100,350$ instances and a validation set of $15,750$ instances. All images in the dataset were preprocessed to an input resolution of $224 \times 224$ pixels.
+
+\subsection{Modality Generation}
+
+We employed the Omnidata models to preprocess the RGB images and extract the estimated Depth Map and Normal Surface \cite{eftekhar2021omnidata}. This approach, based on the DPT-Hybrid architecture \cite{ranftl2021vision}, is analogous to methods used in the literature to generate pseudo-labels from RGB data for pre-training multimodal models \cite{bachmann2022multimae, wang2024largescale}.
+
+For the other modalities, namely the edge map and the entropy map, the RGB images were processed through handcrafted estimators, as depicted in Figure~\ref{fig:seeeNN}.
+
+\subsection{Training Details}
+
+All models were trained for 100 epochs using the Adam optimizer with a learning rate of $0.001$. A batch size of $32$ was used for all training procedures. The models were implemented using the PyTorch framework and trained on a single NVIDIA A100 GPU.
 
 
 
- 

@@ -1,14 +1,34 @@
 \section{Related Work}
+\label{sec:related_work}
 
-In the literature, many methods have been proposed to fuse different modalities in multi-stream networks. These methods can be broadly categorized into early fusion, intermediate fusion, and late fusion.
+The estimation of atmospheric visibility has been a persistent challenge in the fields of computer vision and remote sensing. Over the years, a diverse array of methods has been developed, spanning from traditional techniques rooted in physical models to contemporary deep learning-based approaches.
 
-\subsection{Early Fusion}
-Early fusion involves concatenating different input modalities at the very beginning. The combined data is then fed into a single feature extractor, which learns to extract information from the fused representation. This approach is straightforward but can be limited if one modality dominates the feature space, leading to wasted computational resources without performance gains.
+\subsection{Traditional Visibility Estimation}
 
-\subsection{Intermediate Fusion}
-Intermediate fusion, also known as mid-level fusion, involves feeding each modality through a few layers of its own encoder before fusing the extracted embeddings. This allows the model to learn useful features from each modality before they are combined, addressing some of the limitations of early fusion.
+Early methodologies for visibility estimation were predicated on physical models of atmospheric scattering, most notably Koschmieder's law \cite{koschmieder1924theorie}. These methods typically involve the estimation of atmospheric parameters from imagery by analyzing features such as contrast, color, and other handcrafted attributes. For instance, a prominent technique leverages the dark channel prior, which posits that in most non-sky regions of an image, at least one color channel will exhibit very low intensity \cite{he2010single}. Although these methods have demonstrated efficacy under specific conditions, they frequently falter when confronted with the complexity and variability inherent in real-world atmospheric phenomena.
 
-\subsection{Late Fusion}
-In late fusion, each modality is passed through its own complete encoder-decoder or classification network. The fusion occurs at the decision level, where the outputs from the different models are combined through methods like voting or averaging. While this approach allows for modality-specific processing, it may not fully exploit the correlations between modalities at earlier stages.
+\subsection{Deep Learning for Visibility Estimation}
 
-Each of these fusion strategies has its own advantages and disadvantages. The choice of fusion method can significantly impact the model's performance, and the optimal approach often depends on the specific application and the nature of the modalities being fused.
+The advent of deep learning has catalyzed a paradigm shift, establishing data-driven approaches as the state-of-the-art in numerous computer vision tasks, including the estimation of atmospheric visibility. These methods obviate the need for explicit physical models or handcrafted features by learning to estimate visibility directly from data.
+
+\subsubsection{Unimodal Approaches}
+
+Many of the initial deep learning models developed for visibility estimation were unimodal, relying exclusively on a single input modality, typically RGB images. While these models have achieved considerable success, they are often constrained by the inherent ambiguities present in RGB data. For example, distinguishing between atmospheric conditions such as fog, haze, and clouds based solely on color information can be challenging. Furthermore, factors like glare, low-light conditions, and rapid meteorological changes can significantly degrade the performance of such unimodal systems \cite{Bouhsine2022, AitOuadil2023}.
+
+\subsubsection{Multimodal Approaches}
+
+To surmount the limitations of unimodal strategies, researchers have increasingly gravitated towards multimodal deep learning. By integrating information from multiple sources, these models can construct a more comprehensive and robust representation of the scene, thereby yielding more accurate visibility estimations. As detailed in \cref{tab:literature_review}, a variety of modalities have been explored in the literature, including depth maps, transmission maps, and thermal imagery \cite{You2022, Palvanov2019, Zhang2023, Chen2022, Wauben2016, Cheng2018, Zhou2021}. A clear consensus has emerged within the field: multimodal approaches consistently outperform their unimodal counterparts, offering enhanced reliability and accuracy—attributes that are paramount for safety-critical applications such as aviation.
+
+\subsection{Multimodal Fusion Strategies}
+
+A critical design consideration in multimodal deep learning is the strategy employed for fusing information from different modalities. The point of fusion within the network architecture delineates three principal categories of methods:
+
+\begin{itemize}
+    \item \textbf{Early Fusion:} In this approach, the raw data from various modalities are concatenated at the input level. The resultant combined data is then processed by a single, unified network. Although straightforward to implement, this method may prove suboptimal if the modalities possess disparate characteristics, as the network might struggle to learn a coherent shared representation.
+
+    \item \textbf{Intermediate Fusion:} This strategy entails processing each modality through a dedicated feature extractor and subsequently fusing the learned features at an intermediate layer of the network. This allows the model to learn modality-specific features prior to their combination, which can lead to superior performance compared to early fusion.
+
+    \item \textbf{Late Fusion:} In late fusion, each modality is processed by a separate network, and the final predictions are amalgamated at the decision level. This can be accomplished through techniques such as averaging the outputs, employing a voting scheme, or training a separate model to combine the predictions. Late fusion offers a flexible approach that accommodates the use of distinct architectures for each modality, but it may not fully leverage the inter-modal correlations at earlier stages of processing.
+\end{itemize}
+
+The selection of an appropriate fusion strategy is contingent upon the specific application and the intrinsic nature of the modalities being fused. In this work, we conduct a comparative analysis of different fusion strategies to identify the most efficacious approach for in-flight visibility estimation.

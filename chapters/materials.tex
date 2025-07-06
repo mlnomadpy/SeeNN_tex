@@ -1,18 +1,19 @@
 \section{Methodology}
-We introduce a novel framework incorporating multiple modalities for building atmospheric visibility estimation solutions, as well as constructing a dataset that includes both ground-level and elevated altitude conditions. 
+\label{sec:methodology}
+
+This section details the methodology employed in this study. We introduce a novel framework that leverages multiple modalities for the development of atmospheric visibility estimation solutions. A key component of this work is the construction of a new dataset, SeeSet V1, which encompasses both ground-level and elevated altitude conditions, addressing a critical gap in existing resources.
 
 \subsection{SeeSet V1 Dataset}
 \label{sec:seeset}
-To overcome the limitations encountered in the previous studies and to include a broader range of real-world scenarios, we collect a novel aerial imagery dataset SeeSet v1. This dataset was carefully curated to incorporate dynamic views capturing sceneries from multiple locations, encompassing ground-based and aerial perspectives. 
 
-This section presents a detailed description of the data collection and labeling process (\cref{data_collection}). 
-In \cref{modalities}, we present the extraction techniques used to generate the additional image modalities. 
+To address the limitations of existing datasets and to encompass a broader range of real-world operational scenarios, we have developed a novel aerial imagery dataset designated SeeSet V1. This dataset has been meticulously curated to include dynamic views from multiple locations, capturing scenery from both ground-based and aerial perspectives.
 
+This section provides a comprehensive description of the data collection and labeling procedures (\cref{data_collection}). In \cref{modalities}, we detail the techniques utilized to generate the supplementary image modalities.
 
 \subsubsection{Dataset Collection Process}
 \label{data_collection}
 
-To generate our synthetic dataset, we utilize an FAA-approved flight simulator. This advanced simulator facilitates the controlled acquisition of images, showcasing diverse viewpoints and a range of visibility degradations. The process, as illustrated in Figure~\ref{fig:data_collection_process}, starts at ground-level altitude. We systematically increased visibility in incremental steps, extending up to 100 miles. Subsequently, when the visibility reaches the limit, we elevate the viewpoint's altitude and then reset the visibility to 0, continuing this procedure up to a maximum of 2000 feet AGL.
+The generation of our synthetic dataset was accomplished using an FAA-approved flight simulator. The use of this advanced simulator enabled the systematic and controlled acquisition of images, showcasing a diverse range of viewpoints and visibility degradation levels. The data collection process, as depicted in Figure~\ref{fig:data_collection_process}, commenced at ground level. Visibility was incrementally increased in discrete steps, up to a maximum of 100 miles. Upon reaching this limit, the viewpoint's altitude was elevated, and the visibility was reset to zero. This iterative procedure was continued up to a maximum altitude of 2,000 feet Above Ground Level (AGL).
 
 
 \begin{figure}[htbp]
@@ -82,47 +83,24 @@ Total    &    &                      &  116100  \\
 
 \subsubsection{Modalities}
 \label{modalities}
+
 \textbf{Monocular Depth Estimation:}
 
-In our approach, we used the Omnidata toolkit to extract depth maps from monocular images \cite{eftekhar2021omnidata, ranftl2021vision}. This toolkit provides a comprehensive and scalable method for depth estimation, essential for understanding the spatial arrangement in a scene. The generated depth maps offer a pixel-wise measurement of distance from the viewpoint, aiding in the accurate representation of the three-dimensional structure of the scene. 
+Monocular depth maps were extracted using the Omnidata toolkit \cite{eftekhar2021omnidata, ranftl2021vision}. This toolkit provides a scalable and comprehensive method for depth estimation, which is essential for understanding the spatial arrangement of a scene. The resulting depth maps furnish a pixel-wise measurement of distance from the viewpoint, thereby facilitating an accurate representation of the three-dimensional scene structure.
 
-While depth maps offer valuable information, the models employed to generate them exhibit a notable limitation when applied to our data. The training methodology involves masking the sky and exclusively considering the ground before depth estimation. This approach may pose challenges with certain images in our dataset, as they are collected at varying altitudes.
+It is important to note a specific limitation of the depth estimation models employed. The training methodology for these models involves masking the sky and exclusively considering the ground for depth estimation. This may present challenges for certain images within our dataset that were captured at varying altitudes.
 
 \textbf{Normal Surface Estimation:}
 
-Alongside depth maps, we also used the Omnidata toolkit for normal surface estimation \cite{eftekhar2021omnidata}. This modality provides information about the orientation of surfaces in the image, which is crucial for understanding the geometric properties of the scene. Unlike depth estimation, this modality estimator considers both sky and ground details.
-
+In addition to depth maps, the Omnidata toolkit was also utilized for normal surface estimation \cite{eftekhar2021omnidata}. This modality provides information regarding the orientation of surfaces within the image, which is crucial for discerning the geometric properties of the scene. In contrast to the depth estimation model, the normal surface estimator considers both sky and ground details.
 
 \textbf{Entropy Map:}
 
-We incorporate an image entropy map as a modality to enhance the model's sensitivity to changes in visibility, especially in low-visibility conditions. The entropy map quantifies the amount of information present in different regions of an image. 
-% We report the procedure implemented to generate the Entropy Maps in Algorithm \ref{alg:entropy_map}.
-
-
-% \begin{algorithm}[htbp]
-% \caption{Calculate Entropy Map}\label{alg:entropy_map}
-% \begin{algorithmic}[1]
-% \Require An image $I$ represented as a 2D array, window size $w$
-% \Ensure Entropy map $E$ of the same dimensions as $I$
-% \State $E \gets \text{zeros\_like}(I)$ \Comment{Initialize entropy map $E$ with zeros}
-% \State $rows, cols \gets$ dimensions of $I$ \Comment{Get the number of rows and columns of $I$}
-% \For{$i \gets 0$ \textbf{to} $rows - w$} \Comment{Iterate over rows}
-%     \For{$j \gets 0$ \textbf{to} $cols - w$} \Comment{Iterate over columns}
-%         \State $window \gets I[i : i+w, j : j+w]$ \Comment{Extract $w \times w$ window from $I$}
-%         \State $hist \gets \text{calculateHistogram}(window)$ \Comment{Calculate histogram of the window}
-%         \State $hist \gets hist / \text{sum}(hist)$ \Comment{Normalize histogram}
-%         \State $entropy \gets -\sum (hist \cdot \log_2(hist + \epsilon))$ \Comment{Compute entropy}
-%         \State $E[i + \frac{w}{2}, j + \frac{w}{2}] \gets entropy$ \Comment{Assign entropy to center of window}
-%     \EndFor
-% \EndFor
-% \State \Return $E$ \Comment{Return the computed entropy map}
-% \end{algorithmic}
-% \end{algorithm}
-
+An image entropy map is incorporated as a modality to enhance the model's sensitivity to variations in visibility, particularly under low-visibility conditions. The entropy map quantifies the amount of information, or uncertainty, present in different regions of an image.
 
 \textbf{Edge Detection:}
 
-Edge detection is another key modality well-suited for scenarios involving long-range visibility where defining objects and scene boundaries is critical. By highlighting the contours and edges within the images, this modality aids in delineating shapes and structures, thus providing a clear distinction between different objects and features in the scene. 
+Edge detection serves as another key modality, particularly well-suited for long-range visibility scenarios where the delineation of objects and scene boundaries is critical. By highlighting the contours and edges within an image, this modality aids in defining shapes and structures, thereby providing a clearer distinction between different objects and features in the scene.
 
 
 \begin{figure}
@@ -149,21 +127,23 @@ Edge detection is another key modality well-suited for scenarios involving long-
     \label{fig:mean_of_features}
 \end{figure}
 
- In Figures~\ref{fig:impact_vis_deg_features}, \ref{fig:mean_of_features}, we show the impact of visibility degradation on various modalities of the same scenery. Each row shows one modality, while each column refers to a visibility bin.
+ In Figures~\ref{fig:impact_vis_deg_features} and \ref{fig:mean_of_features}, we illustrate the impact of visibility degradation on various modalities for the same scene. Each row displays a single modality, while each column corresponds to a specific visibility bin.
+
 \subsection{Fusing Modalities}
-Numerous methods have been proposed in the literature for fusing different modalities and multiple stream networks \cite{akkus2023multimodal, radford2021learning, jia2021scaling}. These methods range from simple concatenation of different inputs from the input space to fusion at different levels of the model architecture. 
 
-Early fusion \cite{huang_fusion_2020}, where we concatenate or preprocess all input streams in the input space, then feed it to a single feature extractor which extracts as much information as possible before feeding it to a decoder, classifier head, or projection head. While this method is the simplest method one can use to fuse different modalities, it has many limits where the feature-extracted model might learn to ignore most of the modalities from the early layers and be dominated by only one modality.
+In the literature, numerous methods have been proposed for the fusion of different modalities within multi-stream networks \cite{akkus2023multimodal, radford2021learning, jia2021scaling}. These methods range from the simple concatenation of input streams in the input space to more complex fusion strategies at various levels of the model architecture.
 
-Another approach, widely used in the literature, involves feeding the different modalities into separate encoder layers before fusing all the extracted embeddings \cite{huang_fusion_2020}. In this approach, the model learns to extract useful features from each modality before they are fused, thus preventing one modality from dominating the feature space. But one of the biggest benefits of using this type of architecture is the ability to use recent advancements in representation learning, where each modality is processed through its own encoder, then using either contrastive learning to pre-train all the encoders to align together, or using the unsupervised representation learning where fusion happens in the between the encoder and decoder layer or right from the get-go.
+Early fusion \cite{huang_fusion_2020} involves concatenating or otherwise preprocessing all input streams in the input space. The combined data is then fed into a single feature extractor. While this method is the simplest to implement, it is often limited, as the feature extractor may learn to disregard some modalities, with the feature representation being dominated by a single modality.
 
-Late fusion is another type of fusion \cite{huang_fusion_2020}, where each modality is passed through its own encoder, decoder, or any number of layers until the decision layer (e.g., binary classification). Fusion is then performed either by voting between different models or by taking the mean of the different decisions.
+Intermediate fusion \cite{huang_fusion_2020}, a widely adopted approach, involves feeding the different modalities into separate encoder layers before fusing the extracted embeddings. In this paradigm, the model learns to extract salient features from each modality before they are combined, thereby preventing any single modality from dominating the feature space. A significant advantage of this architecture is its compatibility with recent advancements in representation learning, such as contrastive learning or unsupervised representation learning, where fusion occurs between the encoder and decoder layers or at the initial stages of processing.
+
+Late fusion \cite{huang_fusion_2020} represents another fusion strategy, wherein each modality is passed through its own complete network until the decision layer (e.g., a classifier). Fusion is then performed at the decision level, either through a voting mechanism between the different models or by averaging their respective outputs.
 
 \subsubsection{Multimodal Fusion Methods}
-In the literature, various techniques such as Tensor Fusion \cite{zadeh2017tensorfusionnetworkmultimodal}, Low-Rank Fusion \cite{liu2018efficientlowrankmultimodalfusion}, and attention \cite{NEURIPS2021_76ba9f56} have been proposed \. Although each method has its own advantages and disadvantages, self-attention has emerged as the cornerstone for many recent large-scale methods. While it requires more training data, its computation is significantly low compared to methods like tensor fusion.
 
+Various techniques for multimodal fusion have been proposed in the literature, including Tensor Fusion \cite{zadeh2017tensorfusionnetworkmultimodal}, Low-Rank Fusion \cite{liu2018efficientlowrankmultimodalfusion}, and attention mechanisms \cite{NEURIPS2021_76ba9f56}. Although each method possesses its own set of advantages and disadvantages, self-attention has emerged as a foundational component for many recent large-scale models. While it typically requires a larger volume of training data, its computational cost is significantly lower compared to methods such as tensor fusion.
 
-\subsubsection{SeeNN Multimodal Fusion Framework}
+\subsubsection{The SeeNN Multimodal Fusion Framework}
 
 \label{subsub:proposed}
 
@@ -186,26 +166,26 @@ In the literature, various techniques such as Tensor Fusion \cite{zadeh2017tenso
 \label{fig:seeeNN}
 \end{figure}
 
-The proposed SeeNN framework (Figure~\ref{fig:seeeNN}) integrates multimodal DL techniques to process the images alongside the multiple modalities. 
-First, each input RGB image \( I \) undergoes a series of transformations through modality estimators to produce a depth map \( E_d(I) \), a normal surface map \( E_n(I) \), an edge detection map \( E_e(I) \), and an entropy map \( E_s(I) \). Each of these modalities captures distinct characteristics of the input, providing diverse perspectives on the image's content.
+The proposed SeeNN framework, illustrated in Figure~\ref{fig:seeeNN}, integrates multimodal deep learning techniques to process images concurrently with multiple derived modalities.
 
-Let $m$ denote one of the modalities (generated depth map $depth$, normal surface $normal$, entropy map $entropy$, edge map $edge$, and RGB image $rgb$). We implement different backbone models $\Phi_{m}(\cdot)$ for each modality input $X_m$. 
-We use DenseNet121 \cite{huang_densely_2018} as the architecture for all $\Phi_{m}$ and we feed the resulted embedding from each encoder to a projection head $P_m$ which consists of an MLP with a non-linear
-activation function (GeLU) and dropout for regularization, followed by a layer normalization which is a crucial step to align the feature representations, mitigating the risk of dominance by any single modality due to varying magnitudes of feature values, then we obtain a feature vector \( F_m \).
+Initially, each input RGB image \( I \) undergoes a series of transformations via modality estimators to generate a depth map \( E_d(I) \), a normal surface map \( E_n(I) \), an edge detection map \( E_e(I) \), and an entropy map \( E_s(I) \). Each of these modalities captures distinct characteristics of the input, providing a diverse set of perspectives on the image's content.
 
-We apply this process to RGB image $X_{rgb}$, depth \( X_{depth} \), normal surface  \( X_{normal} \), entropy  \( X_{entropy} \), and edge map \( X_{edge} \) to obtain $F_{rgb}$, $F_{depth}$, $F_{normal}$, $F_{entropy}$, $F_{edge}$, respectively. 
+Let $m$ denote a specific modality (i.e., generated depth map $depth$, normal surface $normal$, entropy map $entropy$, edge map $edge$, and RGB image $rgb$). We employ different backbone models $\Phi_{m}(\cdot)$ for each modality input $X_m$. In this work, we utilize DenseNet121 \cite{huang_densely_2018} as the architecture for all $\Phi_{m}$. The resulting embedding from each encoder is fed to a projection head $P_m$, which consists of a Multi-Layer Perceptron (MLP) with a non-linear activation function (GeLU) and dropout for regularization. This is followed by a layer normalization step, which is crucial for aligning the feature representations and mitigating the risk of dominance by any single modality. This process yields a feature vector \( F_m \).
 
-Following projection heads, the SeeNN framework concatenates these embeddings into a single, comprehensive feature vector \( F \). 
-The concatenation is represented as \( F = [F_{rgb}, F_{depth}; F_{normal}; F_{entropy}; F_{edge}] \), which is then fed to the connector $C$ that is responsible for fusing these modalities.
-We then apply an MLP classifier head to get the final prediction $\hat{y}$.  
+This procedure is applied to the RGB image $X_{rgb}$, depth map \( X_{depth} \), normal surface map \( X_{normal} \), entropy map \( X_{entropy} \), and edge map \( X_{edge} \) to obtain the feature vectors $F_{rgb}$, $F_{depth}$, $F_{normal}$, $F_{entropy}$, and $F_{edge}$, respectively.
 
-When it comes to the connector, we primarily used two methods. The first method involves passing the flattened $F$ directly to the MLP, which involves a simple fusion of the different features. The second method utilizes an attention block to perform self-attention on $F$, followed by flattening the output and feeding it to the MLP head.
+Following the projection heads, the SeeNN framework concatenates these embeddings into a single, comprehensive feature vector \( F \). This concatenation is represented as \( F = [F_{rgb}, F_{depth}; F_{normal}; F_{entropy}; F_{edge}] \). This composite vector is then fed to a connector module, $C$, which is responsible for fusing these modalities.
 
+Finally, an MLP classifier head is applied to the fused feature vector to obtain the final prediction, $\hat{y}$.
+
+For the connector module, we explored two primary methods. The first method involves passing the flattened feature vector \( F \) directly to the MLP, representing a simple yet effective fusion of the different features. The second method utilizes an attention block to perform self-attention on \( F \), followed by flattening the output and feeding it to the MLP head.
 
 \subsubsection{Experimental Setup}
-For our study, we use our collected dataset, SeeSet v1 \ref{sec:seeset}, made of 320 distinct views collected across 20 locations with different land covers, each with visibility ranging from 0 to 100 miles. We split the dataset into two subsets using the holdout approach, where we select all the views from specific locations, and hid them from the model during validation, to ensure that our model doesn't overfit the sceneries and vegetation and learn to estimate the visibility based on the degradation of the image \cite{Bouhsine2022}. This resulted in $100,350$ instances for training and $15,750$ for validation. Each image in the dataset is preprocessed to an input shape of $224 \times 224$ pixels.
 
-We leverage the Omnidata models to preprocess RGB images and export the estimated Depth Map and the Normal Surface \cite{eftekhar2021omnidata}, which is based on the DPT-Hybrid architecture \cite{ranftl2021vision} and is similar to the approach taken in the literature to generate pseudo labels from RGB to pre-train multimodal models \cite{bachmann2022multimae, wang2024largescale}. 
-For the other modalities, i.e., edge map and entropy map, the RGB images are initially processed through the hand-made estimators (Figure~\ref{fig:seeeNN}).
+For this study, we utilized our custom-collected dataset, SeeSet V1 (\ref{sec:seeset}), which comprises 320 distinct views collected across 20 locations with varying land covers, each with visibility ranging from 0 to 100 miles. The dataset was partitioned into training and validation subsets using a holdout approach. Specifically, all views from a predefined set of locations were reserved for the validation set, ensuring that the model does not overfit to specific sceneries and instead learns to estimate visibility based on image degradation \cite{Bouhsine2022}. This resulted in a training set of $100,350$ instances and a validation set of $15,750$ instances. All images in the dataset were preprocessed to an input resolution of $224 \times 224$ pixels.
 
-We train all models for 100 epochs and we use the Adam optimizer with a learning rate of $0.001$. For all models, we set the batch size to $32$.
+We employed the Omnidata models to preprocess the RGB images and extract the estimated Depth Map and Normal Surface \cite{eftekhar2021omnidata}. This approach, based on the DPT-Hybrid architecture \cite{ranftl2021vision}, is analogous to methods used in the literature to generate pseudo-labels from RGB data for pre-training multimodal models \cite{bachmann2022multimae, wang2024largescale}.
+
+For the other modalities, namely the edge map and the entropy map, the RGB images were processed through handcrafted estimators, as depicted in Figure~\ref{fig:seeeNN}.
+
+All models were trained for 100 epochs using the Adam optimizer with a learning rate of $0.001$. A batch size of $32$ was used for all training procedures.
